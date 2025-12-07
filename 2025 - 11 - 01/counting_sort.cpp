@@ -1,32 +1,44 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
 using namespace std;
 
-void countingSort(vector<int>& arr){
-    int maxVal = *max_element(arr.begin(),arr.end());
-    vector<int> count(maxVal+1,0);
-    for(int x: arr) count[x]++;
-    int index=0;
-    for(int i=0;i<=maxVal;i++)
-        while(count[i]--) arr[index++] = i;
+void countingSort(int arr[], int n) {
+    int maxVal = arr[0];
+    for(int i = 1; i < n; i++)
+        if(arr[i] > maxVal) maxVal = arr[i];
+
+    int* count = new int[maxVal + 1]{0}; 
+
+    for(int i = 0; i < n; i++)
+        count[arr[i]]++;
+
+    int index = 0;
+    for(int i = 0; i <= maxVal; i++) {
+        while(count[i]--) {
+            arr[index++] = i;
+        }
+    }
+
+    delete[] count; 
 }
 
-int main(){
+int main() {
     int n;
     cout << "Masukkan jumlah elemen: ";
     cin >> n;
-    vector<int> arr(n);
+
+    int* arr = new int[n];
     cout << "Masukkan elemen (angka >= 0): ";
-    for(int i=0;i<n;i++) cin >> arr[i];
+    for(int i = 0; i < n; i++) cin >> arr[i];
 
     cout << "\nSebelum Counting Sort: ";
-    for(int x: arr) cout << x << " ";
+    for(int i = 0; i < n; i++) cout << arr[i] << " ";
     cout << "\n";
 
-    countingSort(arr);
+    countingSort(arr, n);
 
     cout << "Sesudah Counting Sort: ";
-    for(int x: arr) cout << x << " ";
+    for(int i = 0; i < n; i++) cout << arr[i] << " ";
     cout << "\n";
+
+    delete[] arr; 
 }

@@ -1,15 +1,13 @@
 #include <iostream>
-#include <vector>
 #include <string>
 using namespace std;
 
-struct Mahasiswa{
+struct Mahasiswa {
     string nama;
     float ipk;
 };
 
-void insertionSort(vector<Mahasiswa>& mhs){
-    int n = mhs.size();
+void insertionSort(Mahasiswa mhs[], int n) {
     for(int i=1;i<n;i++){
         Mahasiswa key = mhs[i];
         int j = i-1;
@@ -21,25 +19,25 @@ void insertionSort(vector<Mahasiswa>& mhs){
     }
 }
 
-int main(){
+int main() {
     int n;
     cout << "Jumlah mahasiswa: ";
     cin >> n;
-    vector<Mahasiswa> mhs(n);
+    Mahasiswa mhs[100];
     cin.ignore();
     for(int i=0;i<n;i++){
         cout << "Nama mahasiswa ke-" << i+1 << ": ";
-        getline(cin,mhs[i].nama);
+        getline(cin, mhs[i].nama);
         cout << "IPK: ";
         cin >> mhs[i].ipk;
         cin.ignore();
     }
 
     cout << "\nSebelum sorting (IPK):\n";
-    for(auto &m: mhs) cout << m.nama << " - " << m.ipk << "\n";
+    for(int i=0;i<n;i++) cout << mhs[i].nama << " - " << mhs[i].ipk << "\n";
 
-    insertionSort(mhs);
+    insertionSort(mhs, n);
 
     cout << "\nSesudah sorting (IPK):\n";
-    for(auto &m: mhs) cout << m.nama << " - " << m.ipk << "\n";
+    for(int i=0;i<n;i++) cout << mhs[i].nama << " - " << mhs[i].ipk << "\n";
 }

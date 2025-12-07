@@ -1,41 +1,54 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
-void heapify(vector<int>& arr,int n,int i){
-    int largest=i, l=2*i+1, r=2*i+2;
-    if(l<n && arr[l]>arr[largest]) largest=l;
-    if(r<n && arr[r]>arr[largest]) largest=r;
-    if(largest!=i){
-        swap(arr[i],arr[largest]);
-        heapify(arr,n,largest);
+void heapify(int arr[], int n, int i) {
+    int largest = i;        // root
+    int l = 2*i + 1;        // kiri
+    int r = 2*i + 2;        // kanan
+
+    if(l < n && arr[l] > arr[largest]) largest = l;
+    if(r < n && arr[r] > arr[largest]) largest = r;
+
+    if(largest != i) {
+        int temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
+
+        heapify(arr, n, largest);
     }
 }
 
-void heapSort(vector<int>& arr){
-    int n = arr.size();
-    for(int i=n/2-1;i>=0;i--) heapify(arr,n,i);
-    for(int i=n-1;i>=0;i--){
-        swap(arr[0],arr[i]);
-        heapify(arr,i,0);
+void heapSort(int arr[], int n) {
+    for(int i = n/2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+
+    for(int i = n-1; i >= 0; i--) {
+        int temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+
+        heapify(arr, i, 0);
     }
 }
 
-int main(){
+int main() {
     int n;
     cout << "Masukkan jumlah elemen: ";
     cin >> n;
-    vector<int> arr(n);
+
+    int* arr = new int[n];
     cout << "Masukkan elemen: ";
-    for(int i=0;i<n;i++) cin >> arr[i];
+    for(int i = 0; i < n; i++) cin >> arr[i];
 
     cout << "\nSebelum Heap Sort: ";
-    for(int x: arr) cout << x << " ";
+    for(int i = 0; i < n; i++) cout << arr[i] << " ";
     cout << "\n";
 
-    heapSort(arr);
+    heapSort(arr, n);
 
     cout << "Sesudah Heap Sort: ";
-    for(int x: arr) cout << x << " ";
+    for(int i = 0; i < n; i++) cout << arr[i] << " ";
     cout << "\n";
+
+    delete[] arr; 
 }
